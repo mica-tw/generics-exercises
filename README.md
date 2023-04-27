@@ -15,3 +15,26 @@ the next one.
 Some lines don't compile. If there's a comment mentioning that it won't compile,
 read the error from the compiler and try to understand it. Otherwise, make the
 code changes necessary for it to compile and keep going. 
+
+## Standard Library Generics
+
+Since generics are relatively new, very few std lib packages make use of generics. 
+
+However, some experimental packages that might later be in the standard library. These experimental
+packages may break in between _minor_ Go versions, although they tend to be stable enough for production
+in well tested code bases.
+
+- https://pkg.go.dev/golang.org/x/exp/slices
+- https://pkg.go.dev/golang.org/x/exp/maps
+- https://pkg.go.dev/golang.org/x/exp/constraints
+
+## Note and Further reading
+
+If you're not satisfied already, these two blog posts would be a good next step for reading:
+
+- https://go.dev/blog/intro-generics
+- https://tip.golang.org/blog/when-generics
+
+And finally a note for the extreme edge cases. The predeclared type `comparable` is not _always_ safe to
+use. If you want to get into the academic theory and when the type system behaves in unintuitive ways,
+read this: https://go.dev/blog/comparable 
