@@ -64,9 +64,9 @@ func main() {
 
 	// But what if I use custom types?
 	type myInt int
-	myInts := []myInt{3, 2, 5, 8, 10, -3, 0}
+	// myInts := []myInt{3, 2, 5, 8, 10, -3, 0}
 	// How can I make this work? Unioning every single possible type is getting tiring...
-	fmt.Printf("sum(%v) = %v\n", myInts, generics.Sum(myInts))
+	// fmt.Printf("sum(%v) = %v\n", myInts, generics.Sum(myInts))
 
 	// Okay that's cool, what if I use types that don't support the `+` operator though?
 	intPtrs := []*int{util.GetPtr(3), util.GetPtr(2), util.GetPtr(5), util.GetPtr(8), util.GetPtr(10), util.GetPtr(-3), util.GetPtr(0)}

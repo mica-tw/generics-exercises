@@ -21,9 +21,9 @@ func SumInt32(s []int32) int32 {
 }
 
 // Interfaces can be used as type constraints! `|` is used to create type _unions_
-// type Integer interface {
-// 	~int | int8 | int16 | int32 | int64 | uint | uint8 | uint16 | uint32 | uint64
-// }
+type Integer interface {
+	int | int8 | int16 | int32 | int64 | uint | uint8 | uint16 | uint32 | uint64
+}
 
 func SumInts[I Integer](s []I) I {
 	sum := I(0)
@@ -41,9 +41,9 @@ type Addable interface {
 }
 
 // Use the `~“ operator to support type aliases
-type Integer interface {
-	~int | ~int8 | ~int16 | ~int32 | ~int64 | ~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64
-}
+// type Integer interface {
+// 	~int | ~int8 | ~int16 | ~int32 | ~int64 | ~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64
+// }
 
 func Sum[A Addable](s []A) A {
 	var sum A
