@@ -9,7 +9,7 @@ Code intended for demo purposes only, not production-ready.
 Start by commenting out most of the content in `main.go`.
 
 Uncomment each line starting with `fmt.Printf(...` one-by-one, along with any code preceding each
-statement. Make sure you understand the concepts introduced in each example before movind on to 
+statement. Make sure you understand the concepts introduced in each example before moving on to 
 the next one.
 
 Some lines don't compile. If there's a comment mentioning that it won't compile,
@@ -20,15 +20,15 @@ code changes necessary for it to compile and keep going.
 
 Since generics are relatively new, very few std lib packages make use of generics. 
 
-However, some experimental packages that might later be in the standard library. These experimental
-packages may break in between _minor_ Go versions, although they tend to be stable enough for production
-in well tested code bases.
+However, some experimental packages that might later be in the standard library use generics. 
+These packages may break in between _minor_ Go versions, although they tend to be stable enough
+for production in well-tested code bases.
 
 - https://pkg.go.dev/golang.org/x/exp/slices
 - https://pkg.go.dev/golang.org/x/exp/maps
 - https://pkg.go.dev/golang.org/x/exp/constraints
 
-## Note and Further reading
+## Notes and Further reading
 
 If you're not satisfied already, these two blog posts would be a good next step for reading:
 

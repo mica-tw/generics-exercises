@@ -7,11 +7,61 @@ import (
 	"generics-exercise/pkg/mem_store"
 	"generics-exercise/pkg/util"
 	"reflect"
+	"sort"
+
+	"golang.org/x/exp/slices"
 )
 
 const fooConst = "foo"
 
 func main() {
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/////////// Sorting                      //////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	// How did sorting use to work in Go?
+	toSort := []string{"my", "slice", "of", "strings", "to", "be", "sorted"}
+	toSortCopy := make([]string, len(toSort))
+	copy(toSortCopy, toSort)
+
+	sort.Strings(toSort) // individual implementations for every type 🤦‍♀️
+	fmt.Printf("sort(%v) = %v\n", toSortCopy, toSort)
+
+	// But what if I wanted to sort them in a non-standard order? E.g. short-lex instead of alphabetical
+	copy(toSortCopy, toSort)
+	//sorting functions have to address slice elements by index. Not memory safe at all 👎
+	sort.Slice(toSort, func(i, j int) bool {
+		if len(toSort[i]) == len(toSort[j]) {
+			return toSort[i] < toSort[j]
+		}
+
+		return len(toSort[i]) < len(toSort[j])
+	})
+	fmt.Printf("sortShortLex(%v) = %v\n", toSortCopy, toSort)
+
+	// Generics remove this problem
+	toSort = []string{"my", "slice", "of", "strings", "to", "be", "sorted"}
+	copy(toSortCopy, toSort)
+
+	// can be used on any type that satisfies `constraints.Ordered`, i.e. any type that can use `<`
+	slices.Sort(toSort)
+	fmt.Printf("with generics: sort(%v) = %v\n", toSortCopy, toSort)
+
+	// and with a custom ordering, we have memory safety
+	copy(toSortCopy, toSort)
+	slices.SortFunc(toSort, func(x, y string) bool {
+		if len(x) == len(y) {
+			return x < y
+		}
+
+		return len(x) < len(y)
+	})
+	fmt.Printf("with generics: sortShortLex(%v) = %v\n", toSortCopy, toSort)
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/////////// Pointer Shenanigans                       /////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	// How do you get a pointer if you don't already have a variable?
 
 	// Can't even dereference string without variable
