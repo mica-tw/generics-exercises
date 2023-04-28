@@ -113,7 +113,7 @@ func main() {
 	fmt.Printf("sum(%v) = %v\n", strings, generics.Sum(strings))
 
 	// But what if I use custom types?
-	type myInt int
+	// type myInt int
 	// myInts := []myInt{3, 2, 5, 8, 10, -3, 0}
 	// How can I make this work? Unioning every single possible type is getting tiring...
 	// fmt.Printf("sum(%v) = %v\n", myInts, generics.Sum(myInts))
@@ -200,12 +200,12 @@ func main() {
 	// adStore.Store("foo-id", "foo-string") // Does not compile
 
 	// How about validation?
-	validatorAdStore := mem_store.NewMemStoreWithValidation[string, ads.Ad](func(ad ads.Ad) (bool, error) {
+	validatorAdStore := mem_store.NewMemStoreWithValidation[string](func(ad ads.Ad) error {
 		if len(ad.Description) > 20 {
-			return false, fmt.Errorf("description must be 20 characters or less")
+			return fmt.Errorf("description must be 20 characters or less")
 		}
 
-		return true, nil
+		return nil
 	})
 
 	adToStore := ads.Ad{

@@ -35,13 +35,13 @@ func (s *MemStore[K, V]) Store(id K, value V) (*V, error) {
 // Validation is still easy to implement
 type MemStoreWithValidation[K comparable, V any] struct {
 	*MemStore[K, V]
-	isValidFunc func(V) (bool, error)
+	validate func(V) error
 }
 
-func NewMemStoreWithValidation[K comparable, V any](validator func(val V) (bool, error)) Store[K, V] {
+func NewMemStoreWithValidation[K comparable, V any](validator func(val V) error) Store[K, V] {
 	return &MemStoreWithValidation[K, V]{
-		MemStore:    newMemStore[K, V](),
-		isValidFunc: validator,
+		MemStore: newMemStore[K, V](),
+		validate: validator,
 	}
 }
 
@@ -50,7 +50,7 @@ func (s *MemStoreWithValidation[K, V]) Find(id K) (*V, bool) {
 }
 
 func (s *MemStoreWithValidation[K, V]) Store(id K, value V) (*V, error) {
-	if valid, err := s.isValidFunc(value); !valid {
+	if err := s.validate(value); err != nil {
 		return nil, fmt.Errorf("value is invalid: %w", err)
 	}
 
