@@ -1,5 +1,7 @@
 package generics
 
+import "sync"
+
 func SumInt64(s []int64) int64 {
 	sum := int64(0)
 
@@ -101,6 +103,25 @@ func Map[S any, T any](f func(e S) T, s []S) []T {
 	for i := range s {
 		t[i] = f(s[i])
 	}
+
+	return t
+}
+
+func PMap[S any, T any](f func(e S) T, s []S) []T {
+	t := make([]T, len(s))
+
+	wg := &sync.WaitGroup{}
+
+	wg.Add(len(s))
+	for i := range s {
+		go func(j int) {
+			defer wg.Done()
+
+			t[j] = f(s[j])
+		}(i)
+	}
+
+	wg.Wait()
 
 	return t
 }
